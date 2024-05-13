@@ -2,9 +2,9 @@ package authority
 
 // The link between the roles and permissions
 type RolePermission struct {
-	ID           uint // Unique id (it gets set automatically by the database)
-	RoleID       uint // Role id
-	PermissionID uint // Permission id
+	ID           uint `json:"id"`            // Unique id (it gets set automatically by the database)
+	RoleID       uint `json:"role_id"`       // Role id
+	PermissionID uint `json:"permission_id"` // Permission id
 }
 
 // TableName sets the table name

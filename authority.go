@@ -26,8 +26,6 @@ var (
 	ErrRoleNotFound       = errors.New("role not found")
 )
 
-var tablePrefix string
-
 var auth *Authority
 var options Options
 var tx *gorm.DB
@@ -79,7 +77,7 @@ func (a *Authority) CreateRole(r Role) error {
 		return res.Error
 	}
 
-	return errors.New(fmt.Sprintf("role '%v' already exists", roleSlug))
+	return fmt.Errorf("role '%v' already exists", roleSlug)
 }
 
 // Add a new permission to the database
@@ -102,7 +100,7 @@ func (a *Authority) CreatePermission(p Permission) error {
 		return res.Error
 	}
 
-	return errors.New(fmt.Sprintf("permission '%v' already exists", permSlug))
+	return fmt.Errorf("permission '%v' already exists", permSlug)
 }
 
 // Assigns a group of permissions to a given role
@@ -150,7 +148,7 @@ func (a *Authority) AssignPermissionsToRole(roleSlug string, permSlugs []string)
 		}
 		if rolePerm != (RolePermission{}) {
 			tx.Rollback()
-			return errors.New(fmt.Sprintf("permission '%v' is aleady assigned to the role '%v'", perm.Name, role.Name))
+			return fmt.Errorf("permission '%v' is aleady assigned to the role '%v'", perm.Name, role.Name)
 		}
 		rolePerm = RolePermission{}
 	}
@@ -183,7 +181,7 @@ func (a *Authority) AssignRoleToUser(userID interface{}, roleSlug string) error 
 		return res.Error
 	}
 
-	return errors.New(fmt.Sprintf("this role '%v' is aleady assigned to the user", roleSlug))
+	return fmt.Errorf("this role '%v' is aleady assigned to the user", roleSlug)
 }
 
 // Checks if a role is assigned to a user
