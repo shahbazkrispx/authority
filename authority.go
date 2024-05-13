@@ -26,6 +26,8 @@ var (
 	ErrRoleNotFound       = errors.New("role not found")
 )
 
+var tablePrefix string
+
 var auth *Authority
 var options Options
 var tx *gorm.DB
